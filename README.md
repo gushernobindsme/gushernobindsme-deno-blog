@@ -1,6 +1,6 @@
 # gushernobindsme.com
 
-This is gushernobindsme's blog implemented with deno_blog.
+This is gushernobindsme's blog implemented with [deno_blog](https://github.com/denoland/deno_blog).
 
 # Usage
 
