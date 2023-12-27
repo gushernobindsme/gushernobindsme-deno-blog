@@ -18,4 +18,5 @@ blog({
   middlewares: [
     ga("UA-16807999-1"),
   ],
+  // style: "ul { list-style: inside; } .markdown-body ul { padding-left: 1em; }",
 });
