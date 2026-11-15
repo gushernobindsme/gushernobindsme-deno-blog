@@ -1,0 +1,2 @@
+# 旧 deno_blog の /feed (拡張子無し) を維持する。RSS リーダーの購読が切れないように。
+/feed /feed.xml 200
