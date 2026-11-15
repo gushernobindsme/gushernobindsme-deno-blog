@@ -1,0 +1,80 @@
+---
+import "github-markdown-css/github-markdown.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "gushernobindsme" } = Astro.props;
+
+const links = [
+  { title: "Twitter", url: "https://twitter.com/gushernobindsme" },
+  { title: "GitHub", url: "https://github.com/gushernobindsme" },
+  { title: "Instagram", url: "https://www.instagram.com/takumi.era" },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="alternate" type="application/rss+xml" title={title} href="/feed" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="markdown-body page">
+      <header class="site-header">
+        <img class="avatar" src="/avatar.png" alt="avatar" />
+        <div class="site-header-text">
+          <h1><a href="/">泥水エンジニア日記</a></h1>
+          <nav class="links">
+            {links.map((link, i) => (
+              <>
+                {i > 0 && " / "}
+                <a href={link.url}>{link.title}</a>
+              </>
+            ))}
+          </nav>
+        </div>
+      </header>
+      <main>
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+  .site-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+  }
+  .site-header-text h1 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+  .site-header-text h1 a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .links {
+    font-size: 0.9rem;
+  }
+</style>

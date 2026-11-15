@@ -1,0 +1,55 @@
+---
+import Base from "../layouts/Base.astro";
+import PostList from "../components/PostList.astro";
+import { getSortedPosts } from "../lib/posts";
+
+const posts = await getSortedPosts();
+
+const tagCounts = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<Base title="泥水エンジニア日記">
+  <nav class="tag-nav" aria-label="tags">
+    {tags.map(([tag, count]) => (
+      <a href={`/tag/${tag}`}>{tag} ({count})</a>
+    ))}
+  </nav>
+  <PostList posts={posts} filterable />
+</Base>
+
+<script>
+  // 旧 URL (/?tag=Technology) 互換: クエリを読んで一覧を絞り込む。
+  const params = new URLSearchParams(location.search);
+  const tag = params.get("tag");
+  if (tag) {
+    const items = document.querySelectorAll<HTMLLIElement>(
+      "[data-post-list] > li[data-tags]",
+    );
+    for (const item of items) {
+      const tags = (item.dataset.tags ?? "").split(",");
+      if (!tags.includes(tag)) {
+        item.style.display = "none";
+      }
+    }
+  }
+</script>
+
+<style>
+  .tag-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .tag-nav a {
+    color: #0969da;
+    text-decoration: none;
+  }
+</style>

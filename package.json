@@ -1,0 +1,25 @@
+{
+  "name": "gushernobindsme-blog",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "new-post": "node scripts/new-post.mjs",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "dependencies": {
+    "astro": "^7.4.12",
+    "@astrojs/rss": "^4.0.19",
+    "github-markdown-css": "^5.9.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.162.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261113.1": true
+  }
+}

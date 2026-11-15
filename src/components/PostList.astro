@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate, postUrl } from "../lib/posts";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  /** Render all tags as data attributes so the client script can filter by ?tag=. */
+  filterable?: boolean;
+}
+
+const { posts, filterable = false } = Astro.props;
+---
+
+<ul class="post-list" data-post-list={filterable ? "" : undefined}>
+  {posts.map((post) => (
+    <li data-tags={filterable ? post.data.tags.join(",") : undefined}>
+      <a href={postUrl(post)}>{post.data.title}</a>
+      <time datetime={post.data.publish_date.toISOString()}>
+        {formatDate(post.data.publish_date)}
+      </time>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .post-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eaecef;
+  }
+  .post-list time {
+    color: #57606a;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+</style>
